@@ -1,0 +1,102 @@
+= GCC arm-none-eabi Image
+Jordan Williams <jordan@jwillikers.com>
+:experimental:
+:icons: font
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+:Buildah: https://buildah.io/[Buildah]
+:Fedora: https://getfedora.org/[Fedora]
+:GCC: https://gcc.gnu.org/[GCC]
+:GNU-ARM-Embedded-Toolchain: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads[GNU ARM Embedded Toolchain]
+:OpenSSH: https://www.openssh.com/[OpenSSH]
+:Podman: https://podman.io/[Podman]
+
+image:https://img.shields.io/github/workflow/status/jwillikers/gcc-arm-none-eabi-image/CI/main[GitHub Workflow Status]
+image:https://quay.io/repository/jwillikers/gcc-arm-none-eabi/status["Docker Repository on Quay", link="https://quay.io/repository/jwillikers/gcc-arm-none-eabi"]
+
+A container image for running the {GNU-ARM-Embedded-Toolchain} for C and {cpp}, built on {Fedora}.
+Comes complete with CMake, Conan, Ninja, and Clang tools.
+
+== Quick Start
+
+Supported architectures:: `amd64`, `arm32v7`, `arm64v8`
+
+To use the ARM toolchain inside the container, execute commands via {Podman}.
+
+[source,sh]
+----
+➜ podman run --rm -dt --volume "$PWD":/home/user:Z --name gcc-arm-none-eabi quay.io/jwillikers/gcc-arm-none-eabi arm-none-eabi-g++ test/main.cpp
+----
+
+Or just open a shell inside the container.
+
+[source,sh]
+----
+➜ podman run --rm -it --volume "$HOME":/home/user:Z --name gcc-arm-none-eabi quay.io/jwillikers/gcc-arm-none-eabi
+----
+
+== Build
+
+Use {Buildah} to build the image.
+
+. Install the necessary dependencies.
++
+[source,sh]
+----
+➜ sudo dnf -y install git buildah podman
+----
+
+. Clone this repository.
++
+[source,sh]
+----
+➜ git -C ~/Projects clone git@github.com:jwillikers/gcc-arm-none-eabi-image.git
+----
+
+. Run the shell script.
++
+[source,sh]
+----
+➜ ~/Projects/gcc-image/gcc-arm-none-eabi-image.sh
+----
+
+== Contributing
+
+Contributions in the form of issues, feedback, and even pull requests are welcome.
+Make sure to adhere to the project's link:CODE_OF_CONDUCT.adoc[Code of Conduct].
+
+== Open Source Software
+
+This project is built on the hard work of countless open source contributors.
+Several of these projects are enumerated below.
+
+* https://asciidoctor.org/[Asciidoctor]
+* {Buildah}
+* {Fedora}
+* {GCC}
+* https://git-scm.com/[Git]
+* https://www.linuxfoundation.org/[Linux]
+* {OpenSSH}
+* {Podman}
+* https://www.python.org/[Python]
+* https://rouge.jneen.net/[Rouge]
+* https://www.ruby-lang.org/en/[Ruby]
+
+== Code of Conduct
+
+The project's Code of Conduct is available in the link:CODE_OF_CONDUCT.adoc[Code of Conduct] file.
+
+== License
+
+This repository is licensed under the https://www.gnu.org/licenses/gpl-3.0.html[GPLv3], available in the link:LICENSE.adoc[license file].
+
+© 2021 Jordan Williams
+
+== Authors
+
+mailto:{email}[{author}]
