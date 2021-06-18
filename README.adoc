@@ -16,8 +16,8 @@ endif::[]
 :OpenSSH: https://www.openssh.com/[OpenSSH]
 :Podman: https://podman.io/[Podman]
 
-image:https://img.shields.io/github/workflow/status/jwillikers/gcc-arm-none-eabi-image/CI/main[GitHub Workflow Status]
-image:https://quay.io/repository/jwillikers/gcc-arm-none-eabi/status["Docker Repository on Quay", link="https://quay.io/repository/jwillikers/gcc-arm-none-eabi"]
+image:https://img.shields.io/github/workflow/status/jwillikers/gnu-arm-embedded-image/CI/main[GitHub Workflow Status]
+image:https://quay.io/repository/jwillikers/gnu-arm-embedded/status["Docker Repository on Quay", link="https://quay.io/repository/jwillikers/gnu-arm-embedded"]
 
 A container image for running the {GNU-Arm-Embedded-Toolchain} for C and {cpp}, built on {Fedora}.
 Comes complete with CMake, Conan, Ninja, and Clang tools.
@@ -30,14 +30,14 @@ To use the GNU Arm Embedded Toolchain inside the container, execute commands via
 
 [source,sh]
 ----
-➜ podman run --rm -dt --volume "$PWD":/home/user:Z --name gcc-arm-none-eabi quay.io/jwillikers/gcc-arm-none-eabi arm-none-eabi-g++ test/main.cpp
+➜ podman run --rm -dt --volume "$PWD":/home/user:Z --name gnu-arm-embedded quay.io/jwillikers/gnu-arm-embedded arm-none-eabi-g++ test/main.cpp
 ----
 
 Or just open a shell inside the container.
 
 [source,sh]
 ----
-➜ podman run --rm -it --volume "$HOME":/home/user:Z --name gcc-arm-none-eabi quay.io/jwillikers/gcc-arm-none-eabi
+➜ podman run --rm -it --volume "$HOME":/home/user:Z --name gnu-arm-embedded quay.io/jwillikers/gnu-arm-embedded
 ----
 
 == Build
@@ -55,14 +55,14 @@ Use {Buildah} to build the image.
 +
 [source,sh]
 ----
-➜ git -C ~/Projects clone git@github.com:jwillikers/gcc-arm-none-eabi-image.git
+➜ git -C ~/Projects clone git@github.com:jwillikers/gnu-arm-embedded-image.git
 ----
 
 . Run the shell script.
 +
 [source,sh]
 ----
-➜ ~/Projects/gcc-image/gcc-arm-none-eabi-image.sh
+➜ ~/Projects/gcc-image/gnu-arm-embedded-image.sh
 ----
 
 == Contributing

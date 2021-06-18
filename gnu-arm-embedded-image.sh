@@ -9,7 +9,7 @@ Help()
    # Display Help
    echo "Generate a container image for the GNU Arm Embedded toolchain with Buildah."
    echo
-   echo "Syntax: gcc-arm-none-eabi-image.sh [-a|h]"
+   echo "Syntax: gnu-arm-embedded-image.sh [-a|h]"
    echo "options:"
    echo "a     Build for the specified target architecture, i.e. amd64, arm, arm64."
    echo "h     Print this Help."
