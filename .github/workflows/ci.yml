@@ -27,18 +27,18 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build the image with Buildah
-        run: ./gcc-arm-none-eabi-image.sh -a ${{ matrix.arch }}
+        run: ./gnu-arm-embedded-image.sh -a ${{ matrix.arch }}
 
       - name: Tag the image for Fedora 34
-        run: podman tag localhost/gcc-arm-none-eabi localhost/gcc-arm-none-eabi:34
+        run: podman tag localhost/gnu-arm-embedded localhost/gnu-arm-embedded:34
 
       - name: Export the image
-        run: podman image save --format oci-archive -o gcc-arm-none-eabi-${{ matrix.arch }}.tar localhost/gcc-arm-none-eabi
+        run: podman image save --format oci-archive -o gnu-arm-embedded-${{ matrix.arch }}.tar localhost/gnu-arm-embedded
 
       - uses: actions/upload-artifact@v2
         with:
-          name: gcc-arm-none-eabi-${{ matrix.arch }}
-          path: gcc-arm-none-eabi-${{ matrix.arch }}.tar
+          name: gnu-arm-embedded-${{ matrix.arch }}
+          path: gnu-arm-embedded-${{ matrix.arch }}.tar
 
   test:
     name: Test
@@ -53,13 +53,13 @@ jobs:
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: gcc-arm-none-eabi-${{ matrix.arch }}
+          name: gnu-arm-embedded-${{ matrix.arch }}
 
       - name: Load the image
-        run: podman image load -i gcc-arm-none-eabi-${{ matrix.arch }}.tar
+        run: podman image load -i gnu-arm-embedded-${{ matrix.arch }}.tar
 
-      - name: Run the image and verify gcc-arm-none-eabi is available inside the container
-        run: podman run --rm --volume "$PWD":/home/user:Z --name test-container -d localhost/gcc-arm-none-eabi arm-none-eabi-g++ test/main.cpp
+      - name: Run the image and verify that the GNU Arm Embedded Toolchain is available inside the container
+        run: podman run --rm --volume "$PWD":/home/user:Z --name test-container -d localhost/gnu-arm-embedded arm-none-eabi-g++ test/main.cpp
   
   publish:
     name: Publish
@@ -68,40 +68,40 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Create a manifest
-        run: buildah manifest create gcc-arm-none-eabi-multiarch:latest
+        run: buildah manifest create gnu-arm-embedded-multiarch:latest
 
       # armhfp
       - uses: actions/download-artifact@v2
         with:
-          name: gcc-arm-none-eabi-arm
+          name: gnu-arm-embedded-arm
 
       - name: Load the arm64 image
-        run: podman image load -i gcc-arm-none-eabi-arm.tar
+        run: podman image load -i gnu-arm-embedded-arm.tar
               
       - name: Add the arm image to the manifest
-        run: buildah manifest add gcc-arm-none-eabi-multiarch:latest localhost/gcc-arm-none-eabi
+        run: buildah manifest add gnu-arm-embedded-multiarch:latest localhost/gnu-arm-embedded
 
       # aarch64
       - uses: actions/download-artifact@v2
         with:
-          name: gcc-arm-none-eabi-arm64
+          name: gnu-arm-embedded-arm64
 
       - name: Load the arm64 image
-        run: podman image load -i gcc-arm-none-eabi-arm64.tar
+        run: podman image load -i gnu-arm-embedded-arm64.tar
               
       - name: Add the arm64 image to the manifest
-        run: buildah manifest add gcc-arm-none-eabi-multiarch:latest localhost/gcc-arm-none-eabi
+        run: buildah manifest add gnu-arm-embedded-multiarch:latest localhost/gnu-arm-embedded
 
       # x86_64
       - uses: actions/download-artifact@v2
         with:
-          name: gcc-arm-none-eabi-amd64
+          name: gnu-arm-embedded-amd64
 
       - name: Load the amd64 image
-        run: podman image load -i gcc-arm-none-eabi-amd64.tar
+        run: podman image load -i gnu-arm-embedded-amd64.tar
 
       - name: Add the amd64 image to the manifest
-        run: buildah manifest add gcc-arm-none-eabi-multiarch:latest localhost/gcc-arm-none-eabi
+        run: buildah manifest add gnu-arm-embedded-multiarch:latest localhost/gnu-arm-embedded
 
       - name: Push latest manifest and images to quay.io
-        run: buildah manifest push --rm --all --creds jwillikers+publisher:${{ secrets.REGISTRY_PASSWORD }} gcc-arm-none-eabi-multiarch:latest docker://quay.io/jwillikers/gcc-arm-none-eabi
+        run: buildah manifest push --rm --all --creds jwillikers+publisher:${{ secrets.REGISTRY_PASSWORD }} gnu-arm-embedded-multiarch:latest docker://quay.io/jwillikers/gnu-arm-embedded

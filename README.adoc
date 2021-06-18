@@ -1,4 +1,4 @@
-= GCC arm-none-eabi Image
+= GNU Arm Embedded Image
 Jordan Williams <jordan@jwillikers.com>
 :experimental:
 :icons: font
@@ -12,21 +12,21 @@ endif::[]
 :Buildah: https://buildah.io/[Buildah]
 :Fedora: https://getfedora.org/[Fedora]
 :GCC: https://gcc.gnu.org/[GCC]
-:GNU-ARM-Embedded-Toolchain: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads[GNU ARM Embedded Toolchain]
+:GNU-Arm-Embedded-Toolchain: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads[GNU Arm Embedded Toolchain]
 :OpenSSH: https://www.openssh.com/[OpenSSH]
 :Podman: https://podman.io/[Podman]
 
 image:https://img.shields.io/github/workflow/status/jwillikers/gcc-arm-none-eabi-image/CI/main[GitHub Workflow Status]
 image:https://quay.io/repository/jwillikers/gcc-arm-none-eabi/status["Docker Repository on Quay", link="https://quay.io/repository/jwillikers/gcc-arm-none-eabi"]
 
-A container image for running the {GNU-ARM-Embedded-Toolchain} for C and {cpp}, built on {Fedora}.
+A container image for running the {GNU-Arm-Embedded-Toolchain} for C and {cpp}, built on {Fedora}.
 Comes complete with CMake, Conan, Ninja, and Clang tools.
 
 == Quick Start
 
 Supported architectures:: `amd64`, `arm32v7`, `arm64v8`
 
-To use the ARM toolchain inside the container, execute commands via {Podman}.
+To use the GNU Arm Embedded Toolchain inside the container, execute commands via {Podman}.
 
 [source,sh]
 ----
