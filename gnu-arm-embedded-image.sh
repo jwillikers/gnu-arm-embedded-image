@@ -7,7 +7,7 @@ set -o errexit
 Help()
 {
    # Display Help
-   echo "Generate a container image for the GNU Arm Embedded toolchain with Buildah."
+   echo "Generate a container image for the GNU Arm Embedded Toolchain with Buildah."
    echo
    echo "Syntax: gnu-arm-embedded-image.sh [-a|h]"
    echo "options:"
