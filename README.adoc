@@ -17,7 +17,6 @@ endif::[]
 :Podman: https://podman.io/[Podman]
 
 image:https://img.shields.io/github/workflow/status/jwillikers/gnu-arm-embedded-image/CI/main[GitHub Workflow Status]
-image:https://quay.io/repository/jwillikers/gnu-arm-embedded/status["Docker Repository on Quay", link="https://quay.io/repository/jwillikers/gnu-arm-embedded"]
 
 A container image for running the {GNU-Arm-Embedded-Toolchain} for C and {cpp}, built on {Fedora}.
 Comes complete with CMake, Conan, Ninja, and Clang tools.
