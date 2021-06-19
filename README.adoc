@@ -29,14 +29,14 @@ To use the GNU Arm Embedded Toolchain inside the container, execute commands via
 
 [source,sh]
 ----
-➜ podman run --rm -dt --volume "$PWD":/home/user:Z --name gnu-arm-embedded quay.io/jwillikers/gnu-arm-embedded arm-none-eabi-g++ test/main.cpp
+➜ podman run --rm -dt --volume "$PWD":/home/user:Z --name gnu-arm-embedded quay.io/jwillikers/gnu-arm-embedded:latest arm-none-eabi-g++ test/main.cpp
 ----
 
 Or just open a shell inside the container.
 
 [source,sh]
 ----
-➜ podman run --rm -it --volume "$HOME":/home/user:Z --name gnu-arm-embedded quay.io/jwillikers/gnu-arm-embedded
+➜ podman run --rm -it --volume "$HOME":/home/user:Z --name gnu-arm-embedded quay.io/jwillikers/gnu-arm-embedded:latest
 ----
 
 == Build
