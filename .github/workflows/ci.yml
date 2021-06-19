@@ -51,6 +51,9 @@ jobs:
           - arm64
           - amd64
     steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
       - uses: actions/download-artifact@v2
         with:
           name: gnu-arm-embedded-${{ matrix.arch }}
