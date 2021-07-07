@@ -44,7 +44,7 @@ done
 CONTAINER=$(buildah from --arch "$ARCHITECTURE" registry.fedoraproject.org/fedora-minimal:latest)
 IMAGE="gnu-arm-embedded"
 
-buildah run "$CONTAINER" /bin/sh -c 'microdnf install -y arm-none-eabi-binutils-cs arm-none-eabi-gcc-cs arm-none-eabi-gcc-cs-c++ arm-none-eabi-newlib clang-tools-extra cmake gdb ninja-build python3 python3-pip python3-wheel python-unversioned-command --nodocs --setopt install_weak_deps=0'
+buildah run "$CONTAINER" /bin/sh -c 'microdnf install -y arm-none-eabi-binutils-cs arm-none-eabi-gcc-cs arm-none-eabi-gcc-cs-c++ arm-none-eabi-newlib clang-tools-extra cmake gdb git ninja-build python3 python3-pip python3-wheel python-unversioned-command --nodocs --setopt install_weak_deps=0'
 
 buildah run "$CONTAINER" /bin/sh -c 'microdnf clean all -y'
 
