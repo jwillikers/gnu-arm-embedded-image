@@ -9,25 +9,53 @@ ifdef::env-github[]
 :caution-caption: :fire:
 :warning-caption: :warning:
 endif::[]
+:Black-Magic-Probe: https://github.com/blacksphere/blackmagic/wiki[Black-Magic-Probe]
 :Buildah: https://buildah.io/[Buildah]
 :Fedora: https://getfedora.org/[Fedora]
 :GCC: https://gcc.gnu.org/[GCC]
 :GNU-Arm-Embedded-Toolchain: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads[GNU Arm Embedded Toolchain]
-:OpenSSH: https://www.openssh.com/[OpenSSH]
+:pre-commit: https://pre-commit.com/[pre-commit]
 :Podman: https://podman.io/[Podman]
 
 image:https://img.shields.io/github/workflow/status/jwillikers/gnu-arm-embedded-image/CI/main[GitHub Workflow Status]
+image:https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white[pre-commit, link=https://github.com/pre-commit/pre-commit]
 
 A container image for running the {GNU-Arm-Embedded-Toolchain} for C and {cpp}, built on {Fedora}.
-Comes complete with CMake, Conan, Ninja, and Clang tools.
+Comes complete with Black, CMake, Conan, Ninja, and Clang tools.
+
+== Synopsis
+
+Image:: https://quay.io/repository/jwillikers/gnu-arm-embedded[quay.io/jwillikers/gnu-arm-embedded]
+
+Tags::
+* `latest`
+
+Supported architectures::
+* `amd64` _(x86_64)_
+* `arm` _(armhfp)_
+* `arm64` _(aarch64)_
+
+User:: The default user inside the container is named `user`.
+
+Working directory:: By default, the working directory is the default user's home directory: `/home/user`.
+
+Labels::
+`io.containers.autoupdate=registry`::: Enables automatic updates when using Podman and the _fully-qualified_ image name.
 
 == Quick Start
 
-Supported architectures:: `amd64`, `arm32v7`, `arm64v8`
+First, ensure your user is in the `dialout` group allowing access to serial devices.
 
-Run the container with {Podman} to access the GNU Arm Embedded Toolchain.
-The following example enters the container, mounting the current working directory, Conan's configuration directory, and Git's configuration directory.
-In addition, it mounts the device `/dev/ttyBmpGdb`, a serial console, inside the container.
+[source,sh]
+----
+sudo usermod -aG $USER dialout
+----
+
+NOTE: You'll have to log out and back in for the changes to take effect
+
+Use the following command to run the container via {Podman} and access the GNU Arm Embedded Toolchain.
+The example enters the container, mounting the current working directory, Conan's configuration directory, and Git's configuration directory.
+Additionally, it mounts the serial device `/dev/ttyBmpGdb`, the hosted GDB server on a {Black-Magic-Probe} which allows flashing firmware to a target board.
 
 [source,sh]
 ----
@@ -42,25 +70,29 @@ podman run \
     --volume "$HOME/.config/git":/home/user/.git/config \
     --name gnu-arm-embedded \
     -it \
-    localhost/gnu-arm-embedded:latest conan install ..
-----
-
-Or just open a shell inside the container.
-
-[source,sh]
-----
-podman run --rm -it --volume "$HOME":/home/user:Z --name gnu-arm-embedded quay.io/jwillikers/gnu-arm-embedded:latest
+    localhost/gnu-arm-embedded:latest
 ----
 
 == Build
 
-Use {Buildah} to build the image.
+This project uses {Buildah} and {Podman} for building and testing the image.
+A set of {pre-commit} checks are readily available to ensure your code is up-to-spec at the time it is committed.
+Instructions for setting up a development environment, building the image, and testing the image follow.
+These instructions are intended for users of {Fedora-Silverblue}, where the packages `buildah`, `git`, and `podman` are already available.
+Moreover, I use the {fish} shell.
 
-. Install the necessary dependencies.
+. Install the {fish} shell.
 +
 [source,sh]
 ----
-sudo dnf -y install git buildah podman
+sudo rpm-ostree install fish
+----
+
+. Reboot to finish the installation.
++
+[source,sh]
+----
+systemctl reboot
 ----
 
 . Clone this repository.
@@ -70,11 +102,39 @@ sudo dnf -y install git buildah podman
 git -C ~/Projects clone git@github.com:jwillikers/gnu-arm-embedded-image.git
 ----
 
-. Run the shell script.
+. Install {pre-commit}.
 +
 [source,sh]
 ----
-~/Projects/gcc-image/gnu-arm-embedded-image.sh
+pip install pre-commit
+----
+
+. Change into the project directory.
++
+[source,sh]
+----
+cd ~/Projects/gnu-arm-embedded-image
+----
+
+. Install pre-commit's Git hooks.
++
+[source,sh]
+----
+pre-commit install
+----
+
+. Run the `build.fish` shell script using `buildah unshare` to create the image.
++
+[source,sh]
+----
+buildah unshare ~/Projects/gnu-arm-embedded-image/build.fish
+----
+
+. Verify the image with works correctly by running the `test.fish` shell script.
++
+[source,sh]
+----
+~/Projects/gnu-arm-embedded-image/test.fish
 ----
 
 == Contributing
@@ -95,17 +155,18 @@ Several of these projects are enumerated below.
 * https://www.linuxfoundation.org/[Linux]
 * {OpenSSH}
 * {Podman}
+* {pre-commit}
 * https://www.python.org/[Python]
 * https://rouge.jneen.net/[Rouge]
 * https://www.ruby-lang.org/en/[Ruby]
 
 == Code of Conduct
 
-The project's Code of Conduct is available in the link:CODE_OF_CONDUCT.adoc[Code of Conduct] file.
+Refer to the project's link:CODE_OF_CONDUCT.adoc[Code of Conduct] for details.
 
 == License
 
-This repository is licensed under the https://www.gnu.org/licenses/gpl-3.0.html[GPLv3], available in the link:LICENSE.adoc[license file].
+This repository is licensed under the https://www.gnu.org/licenses/gpl-3.0.html[GPLv3], a copy of which is provided in the link:LICENSE.adoc[license file].
 
 © 2021 Jordan Williams
 
