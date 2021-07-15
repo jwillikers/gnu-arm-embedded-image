@@ -57,6 +57,9 @@ or exit
 buildah config --workingdir /home/user $container
 or exit
 
+buildah config --cmd '["/usr/bin/bash"]' $container
+or exit
+
 buildah config --label io.containers.autoupdate=registry $container
 or exit
 
