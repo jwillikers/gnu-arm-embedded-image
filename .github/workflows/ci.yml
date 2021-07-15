@@ -6,8 +6,8 @@ on:
     branches:
       - main
   schedule:
-    # Run at 06:10 on Sunday
-    - cron: "10 6 * * 0"
+    # Run at 01:10 on Sunday
+    - cron: "10 1 * * 0"
 
 jobs:
   build:
