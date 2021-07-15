@@ -33,7 +33,7 @@ set -l container (buildah from --arch $architecture scratch)
 set -l mountpoint (buildah mount $container)
 
 podman run --rm --arch $architecture --volume $mountpoint:/mnt:Z registry.fedoraproject.org/fedora:latest \
-    bash -c "dnf -y install --installroot /mnt --releasever 34 arm-none-eabi-binutils-cs arm-none-eabi-gcc-cs arm-none-eabi-gcc-cs-c++ arm-none-eabi-newlib black clang-tools-extra cmake gdb git glibc-minimal-langpack ninja-build python3 python3-pip python3-wheel python-unversioned-command --nodocs --setopt install_weak_deps=False"
+    bash -c "dnf -y install --installroot /mnt --releasever 34 arm-none-eabi-binutils-cs arm-none-eabi-gcc-cs arm-none-eabi-gcc-cs-c++ arm-none-eabi-newlib bash black clang-tools-extra cmake coreutils gdb git glibc-minimal-langpack ninja-build python3 python3-pip python3-wheel python-unversioned-command --nodocs --setopt install_weak_deps=False"
 or exit
 
 podman run --rm --arch $architecture --volume $mountpoint:/mnt:Z registry.fedoraproject.org/fedora:latest \
