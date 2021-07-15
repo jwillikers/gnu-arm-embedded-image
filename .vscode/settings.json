@@ -13,6 +13,7 @@
         "creds",
         "dialout",
         "git",
+        "ifdef",
         "jwillikers",
         "mkdir",
         "multiarch",

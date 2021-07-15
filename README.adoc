@@ -70,7 +70,7 @@ podman run \
     --volume "$HOME/.config/git":/home/user/.git/config \
     --name gnu-arm-embedded \
     -it \
-    localhost/gnu-arm-embedded:latest
+    quay.io/jwillikers/gnu-arm-embedded:latest
 ----
 
 == Build
@@ -153,7 +153,6 @@ Several of these projects are enumerated below.
 * {GCC}
 * https://git-scm.com/[Git]
 * https://www.linuxfoundation.org/[Linux]
-* {OpenSSH}
 * {Podman}
 * {pre-commit}
 * https://www.python.org/[Python]
