@@ -70,9 +70,9 @@ buildah config --arch $architecture $container
 or exit
 
 if set -q manifest
-    buildah commit --rm --squash --manifest $manifest $container $name
+    buildah commit --rm --manifest $manifest $container $name
     or exit
 else
-    buildah commit --rm --squash $container $name
+    buildah commit --rm $container $name
     or exit
 end
