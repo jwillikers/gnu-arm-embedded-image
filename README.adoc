@@ -67,7 +67,7 @@ podman run \
     --security-opt label=disable \
     --volume "$PWD":/home/user \
     --volume "$HOME/.conan":/home/user/.conan \
-    --volume "$HOME/.config/git":/home/user/.git/config \
+    --volume "$HOME/.config/git":/home/user/.config/git \
     --name gnu-arm-embedded \
     -it \
     quay.io/jwillikers/gnu-arm-embedded:latest
