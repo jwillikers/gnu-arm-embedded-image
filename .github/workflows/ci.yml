@@ -18,7 +18,7 @@ jobs:
         arch:
           - amd64
           - arm64
-          # - arm
+          - arm
     steps:
       - name: Install the fish shell
         uses: fish-actions/install-fish@v1.1.0
@@ -55,7 +55,7 @@ jobs:
         arch:
           - amd64
           - arm64
-          # - arm
+          - arm
     steps:
       - name: Install the fish shell
         uses: fish-actions/install-fish@v1.1.0
@@ -86,15 +86,15 @@ jobs:
         run: buildah manifest create gnu-arm-embedded:latest
 
       # armhfp
-      # - uses: actions/download-artifact@v2
-      #   with:
-      #     name: gnu-arm-embedded-arm
+      - uses: actions/download-artifact@v2
+        with:
+          name: gnu-arm-embedded-arm
 
-      # - name: Load the armhfp image
-      #   run: podman image load -i gnu-arm-embedded-arm.tar
+      - name: Load the armhfp image
+        run: podman image load -i gnu-arm-embedded-arm.tar
 
-      # - name: Add the armhfp image to the manifest
-      #   run: buildah manifest add gnu-arm-embedded:latest localhost/gnu-arm-embedded-arm
+      - name: Add the armhfp image to the manifest
+        run: buildah manifest add gnu-arm-embedded:latest localhost/gnu-arm-embedded-arm
 
       # aarch64
       - uses: actions/download-artifact@v2
