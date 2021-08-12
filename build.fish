@@ -44,8 +44,8 @@ podman run --rm --arch $architecture --volume $mountpoint:/mnt:Z registry.fedora
     bash -c "dnf -y install python3-pip python-unversioned-command; python -m pip install --root /mnt conan; python -m pip install --root /mnt cmakelang[yaml]"
 or exit
 
-podman run --rm --arch $architecture --volume $mountpoint:/mnt:Z registry.fedoraproject.org/fedora:latest \
-    bash -c "useradd --root /mnt user"
+podman run --rm --arch $architecture --volume $mountpoint:/mnt:Z --volume $mountpoint:/skel registry.fedoraproject.org/fedora:latest \
+    bash -c "useradd --create-home --root /mnt --skel /skel user"
 or exit
 
 buildah unmount $container
@@ -54,7 +54,7 @@ or exit
 buildah config --user user $container
 or exit
 
-buildah config --workingdir /home/user $container
+buildah config --workingdir /home/user/project $container
 or exit
 
 buildah config --cmd '["/usr/bin/bash"]' $container
